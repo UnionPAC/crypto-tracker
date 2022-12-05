@@ -1,11 +1,11 @@
-import AppBar from "./components/AppBar";
-import BasicTable from "./components/Table";
+import BasicTable from "./components/BasicTable";
+import useFetch from "./hooks/useFetch";
 
 const App = () => {
+  const { data, loading } = useFetch("/api");
   return (
     <div className="flex flex-col">
-      <AppBar />
-      <BasicTable />
+      <BasicTable data={data} loading={loading} />
     </div>
   );
 };

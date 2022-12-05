@@ -10,11 +10,7 @@ import TableRow from "@mui/material/TableRow";
 import ArrowDown from "@mui/icons-material/ArrowDropDown";
 import ArrowUp from "@mui/icons-material/ArrowDropUp";
 
-import useFetch from "../hooks/useFetch";
-
-const BasicTable = () => {
-  const { data, loading } = useFetch("/api");
-
+const BasicTable = ({ data, loading }) => {
   return (
     <div>
       {loading ? (
@@ -25,7 +21,9 @@ const BasicTable = () => {
             <Table>
               <TableHead>
                 <TableRow>
-                  <TableCell className="font-bold" align="center">#</TableCell>
+                  <TableCell className="font-bold" align="center">
+                    #
+                  </TableCell>
                   <TableCell className="font-bold">Name</TableCell>
                   <TableCell className="font-bold">Price</TableCell>
                   <TableCell className="font-bold" align="right">
@@ -159,17 +157,16 @@ const BasicTable = () => {
                       </TableCell>
                       <TableCell align="right">
                         <div className="flex justify-end">
-                        <img
-                          src={`https://s3.coinmarketcap.com/generated/sparklines/web/7d/2781/${id}.svg`}
-                          alt={`${name}'s 7 day chart`}
-                          className={
-                            percent_change_7d.toFixed(2) > 0
-                              ? "hue-rotate-[85deg] saturate-[80%] brightness-80"
-                              : "hue-rotate-[300deg] saturate-200 brightness-75"
-                          }
-                        />
+                          <img
+                            src={`https://s3.coinmarketcap.com/generated/sparklines/web/7d/2781/${id}.svg`}
+                            alt={`${name}'s 7 day chart`}
+                            className={
+                              percent_change_7d.toFixed(2) > 0
+                                ? "hue-rotate-[85deg] saturate-[80%] brightness-80"
+                                : "hue-rotate-[300deg] saturate-200 brightness-75"
+                            }
+                          />
                         </div>
-                        
                       </TableCell>
                     </TableRow>
                   );
