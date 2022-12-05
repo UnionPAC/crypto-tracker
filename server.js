@@ -14,11 +14,11 @@ app.get("/hi", (req, res) => {
 });
 
 app.get("/api", async (req, res) => {
-  let fetch_response = await fetch(COINMARKETCAP_SANDBOX_URL, {
+  let fetch_response = await fetch(COINMARKETCAP_URL, {
     method: "GET",
     headers: {
       // note: fake API key for sandbox
-      "X-CMC_PRO_API_KEY": COINMARKETCAP_SANDBOX_API_KEY,
+      "X-CMC_PRO_API_KEY": COINMARKETCAP_API_KEY,
     },
   });
   const json = await fetch_response.json();
