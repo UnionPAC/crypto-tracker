@@ -1,108 +1,20 @@
-// Material TABLE
-import PropTypes from "prop-types";
-import { useTheme } from "@mui/material/styles";
-import Box from "@mui/material/Box";
+// Material UI
 import Table from "@mui/material/Table";
 import TableHead from "@mui/material/TableHead";
 import TableBody from "@mui/material/TableBody";
 import TableCell from "@mui/material/TableCell";
 import TableContainer from "@mui/material/TableContainer";
-import TableFooter from "@mui/material/TableFooter";
-import TablePagination from "@mui/material/TablePagination";
 import TableRow from "@mui/material/TableRow";
-import IconButton from "@mui/material/IconButton";
-import FirstPageIcon from "@mui/icons-material/FirstPage";
-import KeyboardArrowLeft from "@mui/icons-material/KeyboardArrowLeft";
-import KeyboardArrowRight from "@mui/icons-material/KeyboardArrowRight";
-import LastPageIcon from "@mui/icons-material/LastPage";
-
-// MUI ICONS
 import ArrowDown from "@mui/icons-material/ArrowDropDown";
 import ArrowUp from "@mui/icons-material/ArrowDropUp";
 
-import { useState } from "react";
-
-const TablePaginationActions = (props) => {
-  const theme = useTheme();
-  const { count, page, rowsPerPage, onPageChange } = props;
-
-  const handleFirstPageButtonClick = (e) => {
-    onPageChange(e, 0);
-  };
-
-  const handleBackButtonClick = (e) => {
-    onPageChange(e, page - 1);
-  };
-
-  const handleNextButtonClick = (e) => {
-    onPageChange(e, page + 1);
-  };
-
-  const handleLastPageButtonClick = (e) => {
-    onPageChange(e, Math.max(0, Math.ceil(count / rowsPerPage) - 1));
-  };
-
-  return (
-    <Box sx={{ flexShrink: 0, ml: 2.5 }}>
-      <IconButton
-        onClick={handleFirstPageButtonClick}
-        disabled={page === 0}
-        aria-label="first page"
-      >
-        {theme.direction === "rtl" ? <LastPageIcon /> : <FirstPageIcon />}
-      </IconButton>
-      <IconButton
-        onClick={handleBackButtonClick}
-        disabled={page === 0}
-        aria-label="previous page"
-      >
-        {theme.direction === "rtl" ? (
-          <KeyboardArrowRight />
-        ) : (
-          <KeyboardArrowLeft />
-        )}
-      </IconButton>
-      <IconButton
-        onClick={handleNextButtonClick}
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label="next page"
-      >
-        {theme.direction === "rtl" ? (
-          <KeyboardArrowLeft />
-        ) : (
-          <KeyboardArrowRight />
-        )}
-      </IconButton>
-      <IconButton
-        onClick={handleLastPageButtonClick}
-        disabled={page >= Math.ceil(count / rowsPerPage) - 1}
-        aria-label="last page"
-      >
-        {theme.direction === "rtl" ? <FirstPageIcon /> : <LastPageIcon />}
-      </IconButton>
-    </Box>
-  );
-};
-
-const BasicTable = ({ data, loading }) => {
-  const [page, setPage] = useState(0);
-  const [rowsPerPage, setRowsPerPage] = useState(10);
-
-  const handleChangePage = (e, newPage) => {
-    setPage(newPage);
-  };
-
-  const handleChangeRowsPerPage = (e) => {
-    setRowsPerPage(parseInt(e.target.value, 10));
-    setPage(0);
-  };
-
+const BasicTable = ({ data, loading, searchVal }) => {
   return (
     <div>
       {loading ? (
         <div className="text-center m-4">loading data ...</div>
       ) : (
-        <div className="w-[1600px] mx-auto my-8">
+        <div className="w-[1600px] mx-auto mt-8 mb-12">
           <TableContainer>
             <Table>
               <TableHead>
@@ -137,7 +49,23 @@ const BasicTable = ({ data, loading }) => {
               </TableHead>
               <TableBody>
                 {data
-                  .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+                  .filter((val) => {
+                    if (searchVal === "") {
+                      return val;
+                    } else if (
+                      val.name
+                        .toLowerCase()
+                        .includes(searchVal.toLowerCase()) ||
+                      val.symbol.toLowerCase().includes(searchVal.toLowerCase())
+                    ) {
+                      return val;
+                    } else if (
+                      val["cmc_rank"].toString() == searchVal.toString()
+                    ) {
+                      return val;
+                    }
+                  })
+
                   .map((data, index) => {
                     const {
                       cmc_rank,
@@ -257,19 +185,6 @@ const BasicTable = ({ data, loading }) => {
                     );
                   })}
               </TableBody>
-              <TableFooter>
-                <TableRow>
-                  <TablePagination
-                    rowsPerPageOptions={[]}
-                    rowsPerPage={rowsPerPage}
-                    page={page}
-                    count={data.length}
-                    onPageChange={handleChangePage}
-                    ActionsComponent={TablePaginationActions}
-                    onRowsPerPageChange={handleChangeRowsPerPage}
-                  />
-                </TableRow>
-              </TableFooter>
             </Table>
           </TableContainer>
         </div>
