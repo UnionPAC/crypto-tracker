@@ -8,9 +8,9 @@ Crypto tracker is an app that shows the top 100 cryptocurrencies, and provides r
 
 _Search Examples_
 
-"Bitcoin"
-"BTC"
-"1"
+"Bitcoin" <br/>
+"BTC" <br/>
+"1" <br/>
 
 ### 🛠 Built with
 
