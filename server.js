@@ -10,9 +10,7 @@ const COINMARKETCAP_SANDBOX_API_KEY = process.env.COINMARKETCAP_SANDBOX_API_KEY;
 const COINMARKETCAP_URL = process.env.COINMARKETCAP_URL;
 const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY;
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "client/build")));
-} 
+app.use(express.static(path.resolve(__dirname, "./client/build")));
 
 app.get("/", (req, res) => {
   res.send("Route root");
