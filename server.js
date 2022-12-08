@@ -2,15 +2,20 @@ const express = require("express");
 const fetch = require("node-fetch");
 require("dotenv").config();
 const app = express();
-const port = 5000;
+const path = require("path");
+const port = process.env.PORT || 5000;
 
 const COINMARKETCAP_SANDBOX_URL = process.env.COINMARKETCAP_SANDBOX_URL;
 const COINMARKETCAP_SANDBOX_API_KEY = process.env.COINMARKETCAP_SANDBOX_API_KEY;
 const COINMARKETCAP_URL = process.env.COINMARKETCAP_URL;
 const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY;
 
-app.get("/hi", (req, res) => {
-  res.send("Hello!");
+if (process.env.NODE_ENV === "production") {
+  app.use(express.static(path.join(__dirname, "client/build")));
+} 
+
+app.get("/", (req, res) => {
+  res.send("Route root");
 });
 
 app.get("/api", async (req, res) => {
