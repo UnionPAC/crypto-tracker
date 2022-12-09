@@ -1,5 +1,6 @@
 const express = require("express");
 const app = express();
+const fetch = require("node-fetch");
 const path = require("path");
 const PORT = process.env.PORT || 5000;
 
@@ -8,9 +9,7 @@ const COINMARKETCAP_SANDBOX_API_KEY = process.env.COINMARKETCAP_SANDBOX_API_KEY;
 const COINMARKETCAP_URL = process.env.COINMARKETCAP_URL;
 const COINMARKETCAP_API_KEY = process.env.COINMARKETCAP_API_KEY;
 
-app.use(express.json({ extended: false }));
-
-router.get("/api", async (req, res) => {
+app.get("/api", async (req, res) => {
   let fetch_response = await fetch(COINMARKETCAP_URL, {
     method: "GET",
     headers: {
