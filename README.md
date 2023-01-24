@@ -1,5 +1,7 @@
 # Crypto Tracker 🚀
 
+[Demo](https://crypto-tracker-top-100.onrender.com/)
+
 An app to track different cryptocurrency prices!
 
 ### 🔖 How to use
